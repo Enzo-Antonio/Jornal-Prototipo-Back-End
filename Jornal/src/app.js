@@ -26,15 +26,8 @@ const verificarExistencia = (res, campos) => {
   return true;
 };
 
-const verificarNumeroPositivo = (res, valor) => {
-  if (valor != Number(valor) || valor <= 0) {
-    return res.status(400).json({
-      sucesso: false,
-      message: "deve ser um número positivo",
-    });
-  } else {
-    return true;
-  }
+const verificarNumeroPositivo = (valor) => {
+  return !isNaN(valor) && valor > 0;
 };
 
 app.get("/", (req, res) => {
@@ -54,6 +47,32 @@ app.get("/autores", async (req, res) => {
     res.status(500).json({
       sucesso: false,
       message: "erro ao listar autores",
+      erro: error.message,
+    });
+  }
+});
+
+app.get("/autores/:id", async (req, res) => {
+  try {
+    const {id} = req.params
+    const usuarios = await queryAsync('SELECT * FROM autor WHERE id = ? ', [id])
+    if (usuarios.length === 0) {
+      res.status(404).json({
+        sucesso: false,
+        message: 'usuario não encontrado',
+      })
+    } else {
+      res.status(200).json({
+        sucesso: true,
+        message: 'usuario identificado',
+        dados: usuarios
+      })
+    }
+  } catch (error) {
+    console.error(`erro ao buscar autor: ${error}`);
+    res.status(500).json({
+      sucesso: false,
+      message: "erro ao buscar autor",
       erro: error.message,
     });
   }
@@ -96,7 +115,12 @@ app.put("/autores/:id", async (req, res) => {
   const { nome, serie, descricao, email, area } = req.body;
 
   try {
-    if (verificarNumeroPositivo(res, id) !== true) return;
+    if (!verificarNumeroPositivo(id)) {
+      return res.status(400).json({
+        sucesso: false,
+        message: "id deve ser um número positivo",
+      });
+    }
 
     const autorExiste = await queryAsync("SELECT * FROM autor WHERE id = ?", [
       id,
@@ -114,7 +138,12 @@ app.put("/autores/:id", async (req, res) => {
     if (nome !== undefined) autorNovo.nome = nome.trim();
     if (email !== undefined) autorNovo.email = email.trim();
     if (serie !== undefined) {
-      if (verificarNumeroPositivo(res, serie) !== true) return;
+      if (!verificarNumeroPositivo(serie)) {
+        return res.status(400).json({
+          sucesso: false,
+          message: "série deve ser um número positivo",
+        });
+      }
       autorNovo.serie_escolar = serie;
     }
     if (descricao !== undefined)
