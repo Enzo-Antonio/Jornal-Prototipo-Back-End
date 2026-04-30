@@ -82,7 +82,12 @@ app.post("/autores", async (req, res) => {
   const { nome, serie, descricao, email, area } = req.body;
 
   if (verificarExistencia(res, { nome, serie, email }) !== true) return;
-  if (verificarNumeroPositivo(res, serie) !== true) return;
+  if (!verificarNumeroPositivo(serie)) {
+    return res.status(400).json({
+      sucesso: false,
+      message: "série deve ser um número positivo",
+    });
+  } 
 
   try {
     const novoAutor = {
@@ -174,7 +179,12 @@ app.put("/autores/:id", async (req, res) => {
 
 app.delete("/autores/:id", async (req, res) => {
   const { id } = req.params;
-  if (verificarNumeroPositivo(res, id) !== true) return;
+  if (!verificarNumeroPositivo(id)) {
+    return res.status(400).json({
+      sucesso: false,
+      message: "id deve ser um número positivo",
+    });
+  }
   try {
     const autorExiste = await queryAsync("SELECT * FROM autor WHERE id = ?", [
       id,
