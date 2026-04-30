@@ -1,0 +1,1 @@
+Esta pasta (middlewares) serve para ser o "segurança da porta". Ela intercepta as requisições no meio do caminho para validar tokens, checar permissões ou validar dados antes de deixar passar para o Controller através de códigos como if (!req.headers.authorization) return res.status(401).send('Acesso Negado') e usando a função next().

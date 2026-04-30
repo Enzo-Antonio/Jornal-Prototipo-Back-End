@@ -1,0 +1,1 @@
+Esta pasta (routes) serve para ser a "recepcionista" do seu sistema. Ela apenas mapeia as URLs (caminhos) e direciona o visitante para o Controller certo através de códigos como router.get('/usuarios', usuarioController.listar)

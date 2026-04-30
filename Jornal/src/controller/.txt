@@ -1,0 +1,1 @@
+Esta pasta (controller) serve para ser o "maestro". Ela recebe a requisição limpa, chama o Service para fazer o trabalho pesado e devolve a resposta final para o usuário através de códigos como const dados = await usuarioService.buscar(), req.body, req.params e devolvendo res.status(200).json(dados).

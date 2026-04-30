@@ -1,0 +1,1 @@
+Esta pasta (repositories) serve para ser a "bibliotecária". Ela é a única pasta autorizada a tocar no banco de dados. O Service pede "salva isso", e o Repository obedece, isolando o SQL do resto do sistema através de códigos como db.query('INSERT INTO usuarios...') ou UsuarioModel.create(dados).

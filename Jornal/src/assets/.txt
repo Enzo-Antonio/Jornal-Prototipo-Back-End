@@ -1,0 +1,1 @@
+Esta pasta (assets ou public) serve para guardar os arquivos "estáticos" do seu Front-end. São arquivos que o navegador do usuário baixa direto e lê como estão, sem o servidor precisar processar através de arquivos como style.css, script.js (para animações na tela), logo.png e são chamados nas views com <link rel="stylesheet" href="/style.css">.

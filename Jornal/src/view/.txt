@@ -1,0 +1,1 @@
+Esta pasta (view) serve para guardar o HTML dinâmico que o servidor vai montar e devolver para o navegador do usuário (se você não estiver fazendo uma API separada do Front-end) através de arquivos como .ejs, .pug, ou .hbs contendo variáveis como <h1>Bem-vindo, <%= usuario.nome %></h1>.
