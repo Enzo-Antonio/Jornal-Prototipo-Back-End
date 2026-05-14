@@ -1,6 +1,6 @@
-const express = require("express");
+﻿const express = require("express");
 const router = express.Router();
-const autorController = require("../controller/Autor.js");
+const autorController = require("../controller/AutorController.js");
 
 router.get("/", autorController.listarAutores);
 router.get("/:id", autorController.buscarAutor);

@@ -1,5 +1,5 @@
-const autorService = require("../services/Autor.js");
-const erroCatch = require("../utils/errorJornal.js"); // Usando o util de erro do jornal
+﻿const autorService = require("../services/AutorService.js");
+const { erroCatch } = require("../utils/errorJornal.js");
 
 class AutorController {
   async listarAutores(req, res) {
