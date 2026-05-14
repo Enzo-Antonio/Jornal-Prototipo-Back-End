@@ -1,1 +1,0 @@
-Esta pasta (model) serve para definir a "planta baixa" (esquema) das suas tabelas. Geralmente usada quando você tem um ORM (como Sequelize, Prisma ou Mongoose), dizendo quais campos existem e seus tipos através de comandos como nome: { type: DataTypes.STRING, allowNull: false }.

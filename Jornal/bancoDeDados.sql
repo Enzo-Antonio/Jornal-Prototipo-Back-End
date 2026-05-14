@@ -1,6 +1,5 @@
 -- ============================================================================
 -- BANCO DE DADOS: JORNAL SESI
--- Versão melhorada com relacionamentos completos, constraints e validações
 -- ============================================================================
 
 CREATE DATABASE db_jornal_sesi;
@@ -9,21 +8,21 @@ USE db_jornal_sesi;
 -- ============================================================================
 -- ============================================================================
 
--- Gêneros de publicação
+
 CREATE TABLE generos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(50) NOT NULL UNIQUE,
     descricao TEXT
 );
 
--- Temas principais
+
 CREATE TABLE temas_principais (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL UNIQUE,
     descricao TEXT
 );
 
--- Categorias (filtros temáticos)
+
 CREATE TABLE categorias (
     id INT AUTO_INCREMENT PRIMARY KEY,
     sigla VARCHAR(10) NOT NULL UNIQUE,
@@ -31,13 +30,13 @@ CREATE TABLE categorias (
     descricao TEXT
 );
 
--- Status de edição
+
 CREATE TABLE status_edicao (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(20) NOT NULL UNIQUE
 );
 
--- Status de comentário
+
 CREATE TABLE status_comentario (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(20) NOT NULL UNIQUE
@@ -46,7 +45,7 @@ CREATE TABLE status_comentario (
 -- ============================================================================
 -- ============================================================================
 
--- Autores das publicações
+
 CREATE TABLE autor (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,
@@ -57,7 +56,7 @@ CREATE TABLE autor (
     ativo BOOLEAN DEFAULT TRUE
 );
 
--- Edições do jornal
+
 CREATE TABLE edicao (
     id INT AUTO_INCREMENT PRIMARY KEY,
     numero INT NOT NULL UNIQUE,
@@ -84,7 +83,7 @@ CREATE TABLE publicacao (
     visualizacoes INT DEFAULT 0,
     destaque BOOLEAN DEFAULT FALSE,
     
-    -- Foreign Keys
+
     autor_id INT NOT NULL,
     edicao_id INT,
     genero_id INT NOT NULL,
@@ -108,7 +107,7 @@ CREATE TABLE publicacao (
         
 );
 
--- Comentários nas publicações
+
 CREATE TABLE comentario (
     id INT AUTO_INCREMENT PRIMARY KEY,
     publicacao_id INT NOT NULL,
@@ -133,7 +132,6 @@ CREATE TABLE comentario (
         
 );
 -- ============================================================================
--- TABELA DE RELACIONAMENTO N-N
 -- ============================================================================
 
 -- Relacionamento Categoria x Publicação (muitos para muitos)
@@ -201,7 +199,7 @@ INSERT INTO categorias (sigla, nome, descricao) VALUES
     ('CI', 'Ciência', 'Descredibilização, cortes orçamentários, profissionalização'),
     ('VJA', 'Vício em Jogos', 'Apostas infantis e dependência');
 
--- Status de Edição
+
 INSERT INTO status_edicao (nome) VALUES 
     ('Rascunho'),
     ('Em Revisão'),
@@ -209,7 +207,7 @@ INSERT INTO status_edicao (nome) VALUES
     ('Publicada'),
     ('Arquivada');
 
--- Status de Comentário
+
 INSERT INTO status_comentario (nome) VALUES 
     ('Pendente'),
     ('Aprovado'),
@@ -219,7 +217,7 @@ INSERT INTO status_comentario (nome) VALUES
 -- ============================================================================
 -- ============================================================================
 
--- View: Publicações com detalhes completos
+
 CREATE VIEW vw_publicacoes_completas AS
 SELECT 
     p.id,
@@ -247,7 +245,7 @@ LEFT JOIN categorias cat ON pc.categoria_id = cat.id
 GROUP BY p.id, p.titulo, p.subtitulo, p.data_publicacao, p.visualizacoes, 
          p.destaque, a.nome, a.serie_escolar, g.nome, t.nome, e.numero, e.titulo;
 
--- View: Estatísticas por autor
+
 CREATE VIEW vw_estatisticas_autor AS
 SELECT 
     a.id,
@@ -261,7 +259,7 @@ FROM autor a
 LEFT JOIN publicacao p ON a.id = p.autor_id
 GROUP BY a.id, a.nome, a.serie_escolar;
 
--- View: Últimas publicações
+
 CREATE VIEW vw_ultimas_publicacoes AS
 SELECT 
     p.id,
